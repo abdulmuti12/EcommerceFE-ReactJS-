@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from "react";
+import { motion } from "framer-motion";
 import Banner from "../landing/Banner";
 import FeatureProduct from "./FeatureProduct";
 import ScrollToTopOnMount from "../template/ScrollToTopOnMount";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSearch, faFilter, faSort } from "@fortawesome/free-solid-svg-icons";
-import { Link } from "react-router-dom";
-// import "./Landing.css"; // Tambahkan file CSS untuk animasi
+import { faSearch, faFilter } from "@fortawesome/free-solid-svg-icons";
 
 function Landing() {
   const [products, setProducts] = useState([]);
@@ -15,8 +14,7 @@ function Landing() {
   const [nextPageUrl, setNextPageUrl] = useState(null);
   const [prevPageUrl, setPrevPageUrl] = useState(null);
   const [lastPage, setLastPage] = useState(1);
-  
-  // State untuk pencarian
+
   const [category, setCategory] = useState("");
   const [name, setName] = useState("");
   const [priceRange, setPriceRange] = useState("");
@@ -57,40 +55,38 @@ function Landing() {
       <ScrollToTopOnMount />
       <Banner />
 
-      {/* Form Pencarian */}
-      <div className="container filter-container shadow-sm p-4 rounded">
-        <h5 className="text-center mb-3"><FontAwesomeIcon icon={faFilter} /> Filter Pencarian</h5>
+      {/* Form Pencarian dengan Animasi */}
+      <motion.div 
+        className="container filter-container shadow-sm p-4 rounded"
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.3 }}
+      >
+        <h5 className="text-center mb-3">
+          <FontAwesomeIcon icon={faFilter} /> Filter Pencarian
+        </h5>
         <div className="row g-3">
           <div className="col-md-4">
             <div className="input-group">
-              {/* <span className="input-group-text"><FontAwesomeIcon icon={faSearch} /></span>
-              <input 
-                type="text" 
-                className="search-btn" 
-                placeholder="Cari Nama Produk" 
-                value={name} 
+              <input
+                type="text"
+                className="form-control"
+                placeholder="Cari Nama Produk"
+                value={name}
                 onChange={(e) => setName(e.target.value)}
-              /> */}
-                <input
-    type="text"
-    className="form-control"
-    placeholder="Cari Nama Produk"
-    value={name}
-    onChange={(e) => setName(e.target.value)}
-  />
-  <button className="search-btn" onClick={fetchProducts}>
-    <FontAwesomeIcon icon={["fas", "search"]} />
-  </button>
-
+              />
+              <button className="search-btn" onClick={fetchProducts}>
+                <FontAwesomeIcon icon={faSearch} />
+              </button>
             </div>
           </div>
           <div className="col-md-4">
             <select className="form-select" value={category} onChange={(e) => setCategory(e.target.value)}>
               <option value="">Pilih Kategori</option>
-              <option value="Furniture">Furniture (Perabotan)</option>
+              <option value="Furniture">Furniture</option>
               <option value="Dekorasi">Dekorasi</option>
-              <option value="Lighting">Penerangan (Lighting)</option>
-              <option value="KamarMandi">Peralatan Kamar Mandi</option>
+              <option value="Lighting">Lighting</option>
+              <option value="KamarMandi">Kamar Mandi</option>
             </select>
           </div>
           <div className="col-md-4">
@@ -101,32 +97,82 @@ function Landing() {
             </select>
           </div>
         </div>
-      </div>
+      </motion.div>
 
-      <h2 className="text-muted text-center mt-4 mb-3">New Collections</h2>
+      <motion.h2 
+        className="text-muted text-center mt-4 mb-3"
+        initial={{ opacity: 0, scale: 0.8 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 0.6 }}
+      >
+        Our Collections
+      </motion.h2>
+
       <div className="container pb-5 px-lg-5">
         <div className="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4 px-md-5">
           {loading ? (
-            <div className="text-center mt-4">Loading...</div>
+            <motion.div className="text-center mt-4"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.5 }}
+            >
+              Loading...
+            </motion.div>
           ) : error ? (
-            <div className="text-center text-danger">Error: {error}</div>
+            <motion.div className="text-center text-danger"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.5 }}
+            >
+              Error: {error}
+            </motion.div>
           ) : products.length > 0 ? (
-            products.map((product) => <FeatureProduct key={product.id} product={product} />)
+            products.map((product) => (
+              <motion.div 
+                key={product.id} 
+                initial={{ opacity: 0, y: 20 }} 
+                animate={{ opacity: 1, y: 0 }} 
+                transition={{ duration: 0.6, delay: 0.1 * product.id }} 
+              >
+                <FeatureProduct product={product} />
+              </motion.div>
+            ))
           ) : (
-            <div className="text-center">No products available</div>
+            <motion.div className="text-center"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.5 }}
+            >
+              No products available
+            </motion.div>
           )}
         </div>
 
-        {/* Pagination */}
-        <div className="d-flex justify-content-center mt-4">
-          <button onClick={() => setCurrentPage(currentPage - 1)} disabled={!prevPageUrl} className="btn btn-outline-primary me-2">
+        {/* Pagination dengan Animasi */}
+        <motion.div 
+          className="d-flex justify-content-center mt-4"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+        >
+          <button 
+            onClick={() => setCurrentPage(currentPage - 1)} 
+            disabled={!prevPageUrl} 
+            className="btn btn-outline-primary me-2"
+            whileHover={{ scale: 1.1 }}
+          >
             Previous
           </button>
           <span className="mx-3">Page {currentPage} of {lastPage}</span>
-          <button onClick={() => setCurrentPage(currentPage + 1)} disabled={!nextPageUrl} className="btn btn-outline-primary ms-2">
+          <button 
+            onClick={() => setCurrentPage(currentPage + 1)} 
+            disabled={!nextPageUrl} 
+            className="btn btn-outline-primary ms-2"
+            whileHover={{ scale: 1.1 }}
+          >
             Next
           </button>
-        </div>
+        </motion.div>
       </div>
     </>
   );

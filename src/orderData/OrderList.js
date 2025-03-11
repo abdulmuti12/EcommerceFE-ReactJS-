@@ -1,4 +1,6 @@
 import { useState, useEffect } from "react";
+import ScrollToTopOnMount from "../template/ScrollToTopOnMount";
+
 
 function OrderList() {
   const [orders, setOrders] = useState([]);
@@ -43,9 +45,22 @@ function OrderList() {
   }, [currentPage, statusFilter]);
 
   return (
-    <div className="container mt-5 p-4 bg-white shadow rounded-3">
-      <h2 className="text-center mb-4 text-primary">Order List</h2>
+    
+    <div className="container mt-5  py-4 px-xl-5">
+        <ScrollToTopOnMount />
+        <nav aria-label="breadcrumb" className="bg-custom-light rounded mb-4">
+          <ol className="breadcrumb p-3">
+            <li className="breadcrumb-item">
+              {/* <Link className="text-decoration-none link-secondary" to="/"> */}
+                Transaction
+              {/* </Link> */}
+            </li>
+            <li className="breadcrumb-item">Transaction Confirm</li>
+          </ol>
+        </nav>
 
+      <div className="card shadow-lg p-4">
+      <h2 className="text-center mb-4 text-primary">Order List</h2>
       <div className="mb-3 d-flex justify-content-center">
         <label className="me-2 fw-bold">Status Filter:</label>
         <select
@@ -64,8 +79,8 @@ function OrderList() {
       {error && <p className="text-danger text-center fw-bold">{error}</p>}
       
       {!loading && !error && (
-        <div className="table-responsive">
-          <table className="table table-hover table-bordered text-center align-middle">
+        <div className="table-responsive mt-3">
+          <table className="table table-striped">
             <thead className="table-dark">
               <tr>
                 <th>Order Code</th>
@@ -117,6 +132,9 @@ function OrderList() {
           Next
         </button>
       </div>
+      </div>
+
+     
     </div>
   );
 }

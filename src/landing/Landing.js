@@ -83,7 +83,7 @@ function Landing() {
           </Link>
         </div>
       </div> */}
-      <h2 className="text-muted text-center mt-4 mb-3">New Collections</h2>
+      <h2 className="text-muted text-center mt-4 mb-3">Our Collections</h2>
       <div className="container pb-5 px-lg-5">
         <div className="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4 px-md-5">
           {products.length > 0 ? (

@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom"; // Gunakan useHistory
 import { Spinner, Alert } from "react-bootstrap"; // Import Spinner dan Alert
+import ScrollToTopOnMount from "../template/ScrollToTopOnMount";
 
 function CheckoutDetail() {
   const [checkoutData, setCheckoutData] = useState(null);
@@ -125,7 +126,19 @@ function CheckoutDetail() {
   }
 
   return (
-    <div className="container mt-5">
+    <div className="container mt-5  py-4 px-xl-5">
+            <ScrollToTopOnMount />
+        <nav aria-label="breadcrumb" className="bg-custom-light rounded mb-4">
+          <ol className="breadcrumb p-3">
+            <li className="breadcrumb-item">
+              {/* <Link className="text-decoration-none link-secondary" to="/"> */}
+                Transaction
+              {/* </Link> */}
+            </li>
+            <li className="breadcrumb-item">Transaction Confirm</li>
+          </ol>
+        </nav>
+
       <div className="card shadow-lg p-4">
         <h2 className="text-center mb-4">Checkout Details</h2>
 

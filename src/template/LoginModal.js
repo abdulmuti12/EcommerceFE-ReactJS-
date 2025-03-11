@@ -33,7 +33,7 @@ function LoginModal({ show, onClose }) {
         localStorage.setItem("username", data.data.username);
         localStorage.setItem("email", data.data.email);
 
-        alert("Login Berhasil!");
+        // alert("Login Berhasil!");
         onClose(); // Tutup modal setelah login sukses
         window.location.reload(); // Refresh halaman setelah login
       } else {
